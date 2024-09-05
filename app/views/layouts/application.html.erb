@@ -7,10 +7,44 @@
     <%= csp_meta_tag %>
 
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <%= stylesheet_link_tag "https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i", "data-turbo-track": "reload" %>
   </head>
 
   <body>
-    <%= yield %>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#">Sys Estoque</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="#">Início</a>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Estoque
+              </a>
+              <ul class="dropdown-menu bg-dark text-white" aria-labelledby="navbarDropdown">
+                <li><%= link_to 'Cadastrar Estoque', new_estoque_path, class: 'dropdown-item' %></li>
+                <li><%= link_to 'Listar Estoque', estoques_path, class: 'dropdown-item' %></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <div class="container">
+      <%= yield %>
+    </div>
+
+    <footer class="bg-body-tertiary text-center text-lg-start bg-dark fixed-bottom">
+      <div class="text-center p-3">
+        <span class="text-white">Made by: João Temochko (2024)</span>
+      </div>
+    </footer>
   </body>
 
 <%= javascript_include_tag 'application.js' %>

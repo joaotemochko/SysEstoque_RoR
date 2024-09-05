@@ -1,10 +1,27 @@
 <p style="color: green"><%= notice %></p>
 
-<%= render @estoque %>
+<table class="text-center table table-striped table-bordered table-hover" id="tabelaEstoque">
+  <thead>
+  <tr>
+    <th class="text-center">Produto</th>
+    <th class="text-center">Valor</th>
+    <th class="text-center">Quantidade</th>
+    <th class="text-center">Descrição</th>
+    <th class="text-center">Lote</th>
+  </tr>
+  <tbody>
+    <tr>
+      <%= render @estoque %>
+    </tr>
+  </tbody>
+</table>
+
 
 <div>
-  <%= link_to "Edit this estoque", edit_estoque_path(@estoque) %> |
-  <%= link_to "Back to estoques", estoques_path %>
+  <%= link_to "Editar", edit_estoque_path(@estoque), class: 'btn btn-outline-success' %> |
+  <%= link_to "Voltar", estoques_path, class: 'btn btn-outline-dark' %>
 
-  <%= button_to "Destroy this estoque", @estoque, method: :delete %>
+  <br>
+
+  <%= button_to "Excluir", @estoque, class: 'btn btn-outline-danger', method: :delete %>
 </div>
