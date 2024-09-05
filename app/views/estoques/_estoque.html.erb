@@ -1,27 +1,22 @@
 <div id="<%= dom_id estoque %>">
-  <p>
-    <strong>Nome:</strong>
+  <td>
     <%= estoque.nome %>
-  </p>
+  </td>
 
-  <p>
-    <strong>Preco kg:</strong>
-    <%= estoque.preco_kg %>
-  </p>
+  <td>
+    <%= estoque.preco_kg * estoque.quantidade %>
+  </td>
 
-  <p>
-    <strong>Quantidade:</strong>
+  <td>
     <%= estoque.quantidade %>
-  </p>
+  </td>
 
-  <p>
-    <strong>Desc:</strong>
+  <td>
     <%= estoque.desc %>
-  </p>
+  </td>
 
-  <p>
-    <strong>Lote:</strong>
+  <td>
     <%= estoque.lote %>
-  </p>
+  </td>
 
 </div>
