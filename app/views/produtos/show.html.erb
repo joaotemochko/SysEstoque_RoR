@@ -1,0 +1,19 @@
+<p style="color: green"><%= notice %></p>
+<table class="text-center table table-striped table-bordered table-hover" id="tabelaEstoque">
+  <thead>
+    <tr>
+      <th>Nome</th>
+      <th>Descrição</th>
+    </tr>
+  <tbody>
+    <tr>
+      <%= render @produto %>
+    </tr>
+  </tbody>
+</table>
+<div>
+  <%= link_to "Editar", edit_produto_path(@produto), class: 'btn btn-outline-success' %> |
+  <%= link_to "Voltar", produtos_path, class: 'btn btn-outline-dark' %>
+
+  <%= button_to "Excluir", @produto, class: 'btn btn-outline-danger', method: :delete %>
+</div>
