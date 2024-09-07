@@ -10,18 +10,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_09_06_023907) do
+ActiveRecord::Schema[7.1].define(version: 2024_09_06_193215) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "estoques", force: :cascade do |t|
-    t.string "nome"
     t.float "preco_kg"
     t.float "quantidade"
     t.string "desc"
     t.integer "lote"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "produto_id", null: false
+    t.index ["produto_id"], name: "index_estoques_on_produto_id"
   end
 
   create_table "produtos", force: :cascade do |t|
@@ -31,4 +32,5 @@ ActiveRecord::Schema[7.1].define(version: 2024_09_06_023907) do
     t.datetime "updated_at", null: false
   end
 
+  add_foreign_key "estoques", "produtos"
 end

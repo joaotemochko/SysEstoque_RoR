@@ -1,6 +1,6 @@
 <div id="<%= dom_id estoque %>">
   <td>
-    <%= estoque.nome %>
+    <%= Produto.where(:id => estoque.produto_id).pluck(:nome)[0] %>
   </td>
 
   <td>

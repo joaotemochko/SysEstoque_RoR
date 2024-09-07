@@ -12,8 +12,8 @@
   <% end %>
 
   <div>
-    <%= form.label :nome, style: "display: block" %>
-    <%= form.text_field :nome %>
+    <%= form.label :produto, style: "display: block" %>
+    <%= form.select("produto_id", @produto_options, {include_blank: 'Selecione o produto'}) %>
   </div>
 
   <div>

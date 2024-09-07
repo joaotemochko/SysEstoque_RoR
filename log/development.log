@@ -1037,3 +1037,906 @@ Processing by ProdutosController#index as HTML
 Completed 200 OK in 11ms (Views: 5.6ms | ActiveRecord: 5.0ms | Allocations: 11403)
 
 
+  [1m[36mActiveRecord::SchemaMigration Load (2.8ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mActiveRecord::InternalMetadata Load (2.1ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1[0m  [[nil, "environment"]]
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.2ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1[0m  [[nil, "environment"]]
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.2ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1[0m  [[nil, "environment"]]
+  [1m[35m (69.5ms)[0m  [1m[35mDROP DATABASE IF EXISTS "sys_estoque_development"[0m
+  [1m[35m (32.9ms)[0m  [1m[35mDROP DATABASE IF EXISTS "sys_estoque_test"[0m
+  [1m[35m (170.4ms)[0m  [1m[35mCREATE DATABASE "sys_estoque_development" ENCODING = 'unicode'[0m
+  [1m[35m (90.7ms)[0m  [1m[35mCREATE DATABASE "sys_estoque_test" ENCODING = 'unicode'[0m
+  [1m[35m (7.1ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" character varying NOT NULL PRIMARY KEY)[0m
+  [1m[35m (3.2ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" character varying NOT NULL PRIMARY KEY, "value" character varying, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL)[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT pg_try_advisory_lock(2646436733581968495)[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.5ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.7ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1[0m  [[nil, "environment"]]
+  [1m[36mActiveRecord::InternalMetadata Create (1.4ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES ('environment', 'development', '2024-09-06 19:33:46.492389', '2024-09-06 19:33:46.492390') RETURNING "key"[0m
+Migrating to CreateEstoques (20240903234456)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (8.3ms)[0m  [1m[35mCREATE TABLE "estoques" ("id" bigserial primary key, "preco_kg" float, "quantidade" float, "desc" character varying, "lote" integer, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL)[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.3ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ('20240903234456') RETURNING "version"[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mCOMMIT[0m
+Migrating to CreateProdutos (20240906023907)
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (3.4ms)[0m  [1m[35mCREATE TABLE "produtos" ("id" bigserial primary key, "nome" character varying, "desc" character varying, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL)[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.1ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ('20240906023907') RETURNING "version"[0m
+  [1m[36mTRANSACTION (0.4ms)[0m  [1m[35mCOMMIT[0m
+Migrating to AdddProdutosRefToEstoques (20240906193215)
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (2.2ms)[0m  [1m[35mALTER TABLE "estoques" ADD "produto_id" bigint NOT NULL[0m
+  [1m[35m (1.3ms)[0m  [1m[35mCREATE INDEX "index_estoques_on_produto_id" ON "estoques" ("produto_id")[0m
+  [1m[35m (2.8ms)[0m  [1m[35mALTER TABLE "estoques" ADD CONSTRAINT "fk_rails_4226040c9f"
+FOREIGN KEY ("produto_id")
+  REFERENCES "produtos" ("id")
+[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.1ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ('20240906193215') RETURNING "version"[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT pg_advisory_unlock(2646436733581968495)[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Started GET "/produtos" for ::1 at 2024-09-06 16:34:02 -0300
+  [1m[36mActiveRecord::SchemaMigration Load (1.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by ProdutosController#index as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering produtos/index.html.erb within layouts/application
+  [1m[36mProduto Load (0.9ms)[0m  [1m[34mSELECT "produtos".* FROM "produtos"[0m
+  ↳ app/views/produtos/index.html.erb:15
+  Rendered produtos/index.html.erb within layouts/application (Duration: 24.8ms | Allocations: 5263)
+  Rendered layout layouts/application.html.erb (Duration: 87.9ms | Allocations: 33848)
+Completed 200 OK in 100ms (Views: 81.7ms | ActiveRecord: 8.0ms | Allocations: 43785)
+
+
+Started GET "/produtos/new" for ::1 at 2024-09-06 16:34:04 -0300
+Processing by ProdutosController#new as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering produtos/new.html.erb within layouts/application
+  Rendered produtos/_form.html.erb (Duration: 4.4ms | Allocations: 1946)
+  Rendered produtos/new.html.erb within layouts/application (Duration: 5.8ms | Allocations: 2266)
+  Rendered layout layouts/application.html.erb (Duration: 13.1ms | Allocations: 7795)
+Completed 200 OK in 46ms (Views: 14.0ms | ActiveRecord: 20.6ms | Allocations: 13665)
+
+
+Started POST "/produtos" for ::1 at 2024-09-06 16:34:09 -0300
+Processing by ProdutosController#create as HTML
+  Parameters: {"authenticity_token"=>"[FILTERED]", "produto"=>{"nome"=>"CAMARAO", "desc"=>""}, "commit"=>"Create Produto"}
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/produtos_controller.rb:27:in `block in create'
+  [1m[36mProduto Create (3.0ms)[0m  [1m[32mINSERT INTO "produtos" ("nome", "desc", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["nome", "CAMARAO"], ["desc", ""], ["created_at", "2024-09-06 19:34:09.577542"], ["updated_at", "2024-09-06 19:34:09.577542"]]
+  ↳ app/controllers/produtos_controller.rb:27:in `block in create'
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/produtos_controller.rb:27:in `block in create'
+Redirected to http://localhost:3000/produtos/1
+Completed 302 Found in 10ms (ActiveRecord: 3.8ms | Allocations: 3403)
+
+
+Started GET "/produtos/1" for ::1 at 2024-09-06 16:34:09 -0300
+Processing by ProdutosController#show as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mProduto Load (0.2ms)[0m  [1m[34mSELECT "produtos".* FROM "produtos" WHERE "produtos"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/produtos_controller.rb:63:in `set_produto'
+  Rendering layout layouts/application.html.erb
+  Rendering produtos/show.html.erb within layouts/application
+  Rendered produtos/_produto.html.erb (Duration: 0.4ms | Allocations: 182)
+  Rendered produtos/show.html.erb within layouts/application (Duration: 3.0ms | Allocations: 1137)
+  Rendered layout layouts/application.html.erb (Duration: 8.7ms | Allocations: 6661)
+Completed 200 OK in 24ms (Views: 9.1ms | ActiveRecord: 11.4ms | Allocations: 9272)
+
+
+Started GET "/estoques/new" for ::1 at 2024-09-06 16:34:12 -0300
+Processing by EstoquesController#new as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering estoques/new.html.erb within layouts/application
+  Rendered estoques/_form.html.erb (Duration: 4.3ms | Allocations: 2038)
+  Rendered estoques/new.html.erb within layouts/application (Duration: 5.7ms | Allocations: 2327)
+  Rendered layout layouts/application.html.erb (Duration: 11.8ms | Allocations: 7859)
+Completed 200 OK in 30ms (Views: 12.9ms | ActiveRecord: 5.6ms | Allocations: 13703)
+
+
+Started GET "/estoques/new" for ::1 at 2024-09-06 16:36:35 -0300
+  [1m[36mActiveRecord::SchemaMigration Load (1.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by EstoquesController#new as HTML
+  [1m[36mProduto Pluck (0.4ms)[0m  [1m[34mSELECT "produtos"."nome", "produtos"."id" FROM "produtos"[0m
+  ↳ app/controllers/estoques_controller.rb:68:in `set_produto_options'
+  Rendering layout layouts/application.html.erb
+  Rendering estoques/new.html.erb within layouts/application
+  Rendered estoques/_form.html.erb (Duration: 9.3ms | Allocations: 4608)
+  Rendered estoques/new.html.erb within layouts/application (Duration: 9.9ms | Allocations: 5057)
+  Rendered layout layouts/application.html.erb (Duration: 44.1ms | Allocations: 33258)
+Completed 200 OK in 118ms (Views: 46.4ms | ActiveRecord: 23.2ms | Allocations: 54382)
+
+
+Started POST "/estoques" for ::1 at 2024-09-06 16:36:51 -0300
+Processing by EstoquesController#create as HTML
+  Parameters: {"authenticity_token"=>"[FILTERED]", "estoque"=>{"produto_id"=>"1", "preco_kg"=>"22.9", "quantidade"=>"23", "desc"=>"Teste", "lote"=>"23"}, "commit"=>"Registrar"}
+  [1m[36mProduto Pluck (1.2ms)[0m  [1m[34mSELECT "produtos"."nome", "produtos"."id" FROM "produtos"[0m
+  ↳ app/controllers/estoques_controller.rb:68:in `set_produto_options'
+[31mUnpermitted parameter: :produto_id. Context: { controller: EstoquesController, action: create, request: #<ActionDispatch::Request:0x0000000112d35be0>, params: {"authenticity_token"=>"[FILTERED]", "estoque"=>{"produto_id"=>"1", "preco_kg"=>"22.9", "quantidade"=>"23", "desc"=>"Teste", "lote"=>"23"}, "commit"=>"Registrar", "controller"=>"estoques", "action"=>"create"} }[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/estoques_controller.rb:28:in `block in create'
+  [1m[36mEstoque Create (5.8ms)[0m  [1m[32mINSERT INTO "estoques" ("preco_kg", "quantidade", "desc", "lote", "created_at", "updated_at", "produto_id") VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING "id"[0m  [["preco_kg", 22.9], ["quantidade", 23.0], ["desc", "Teste"], ["lote", 23], ["created_at", "2024-09-06 19:36:51.729443"], ["updated_at", "2024-09-06 19:36:51.729443"], ["produto_id", nil]]
+  ↳ app/controllers/estoques_controller.rb:28:in `block in create'
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK[0m
+  ↳ app/controllers/estoques_controller.rb:28:in `block in create'
+Completed 500 Internal Server Error in 15ms (ActiveRecord: 7.2ms | Allocations: 5147)
+
+
+  
+ActiveRecord::NotNullViolation (PG::NotNullViolation: ERROR:  null value in column "produto_id" of relation "estoques" violates not-null constraint
+DETAIL:  Failing row contains (1, 22.9, 23, Teste, 23, 2024-09-06 19:36:51.729443, 2024-09-06 19:36:51.729443, null).
+):
+  
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT pg_try_advisory_lock(2646436733581968495)[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.9ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mActiveRecord::InternalMetadata Load (1.1ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1[0m  [[nil, "environment"]]
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT pg_advisory_unlock(2646436733581968495)[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.9ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mActiveRecord::InternalMetadata Load (1.0ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1[0m  [[nil, "environment"]]
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.2ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1[0m  [[nil, "environment"]]
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.2ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1[0m  [[nil, "environment"]]
+  [1m[35m (156.0ms)[0m  [1m[35mDROP DATABASE IF EXISTS "sys_estoque_development"[0m
+  [1m[35m (33.4ms)[0m  [1m[35mDROP DATABASE IF EXISTS "sys_estoque_test"[0m
+  [1m[35m (65.7ms)[0m  [1m[35mCREATE DATABASE "sys_estoque_development" ENCODING = 'unicode'[0m
+  [1m[35m (62.1ms)[0m  [1m[35mCREATE DATABASE "sys_estoque_test" ENCODING = 'unicode'[0m
+  [1m[35m (6.3ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" character varying NOT NULL PRIMARY KEY)[0m
+  [1m[35m (2.8ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" character varying NOT NULL PRIMARY KEY, "value" character varying, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL)[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT pg_try_advisory_lock(2646436733581968495)[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.6ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.9ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1[0m  [[nil, "environment"]]
+  [1m[36mActiveRecord::InternalMetadata Create (0.7ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES ('environment', 'development', '2024-09-06 19:39:51.413776', '2024-09-06 19:39:51.413778') RETURNING "key"[0m
+Migrating to CreateEstoques (20240903234456)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (6.9ms)[0m  [1m[35mCREATE TABLE "estoques" ("id" bigserial primary key, "preco_kg" float, "quantidade" float, "desc" character varying, "lote" integer, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL)[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.4ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ('20240903234456') RETURNING "version"[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mCOMMIT[0m
+Migrating to CreateProdutos (20240906023907)
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (4.3ms)[0m  [1m[35mCREATE TABLE "produtos" ("id" bigserial primary key, "nome" character varying, "desc" character varying, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL)[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.1ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ('20240906023907') RETURNING "version"[0m
+  [1m[36mTRANSACTION (0.4ms)[0m  [1m[35mCOMMIT[0m
+Migrating to AdddProdutosRefToEstoques (20240906193215)
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (1.1ms)[0m  [1m[35mALTER TABLE "estoques" ADD "produto_id" bigint NOT NULL[0m
+  [1m[35m (1.5ms)[0m  [1m[35mCREATE INDEX "index_estoques_on_produto_id" ON "estoques" ("produto_id")[0m
+  [1m[35m (3.5ms)[0m  [1m[35mALTER TABLE "estoques" ADD CONSTRAINT "fk_rails_4226040c9f"
+FOREIGN KEY ("produto_id")
+  REFERENCES "produtos" ("id")
+[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ('20240906193215') RETURNING "version"[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT pg_advisory_unlock(2646436733581968495)[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Started GET "/" for ::1 at 2024-09-06 16:39:57 -0300
+  [1m[36mActiveRecord::SchemaMigration Load (0.5ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by EstoquesController#index as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering estoques/index.html.erb within layouts/application
+  [1m[36mEstoque Load (0.8ms)[0m  [1m[34mSELECT "estoques".* FROM "estoques"[0m
+  ↳ app/views/estoques/index.html.erb:19
+  Rendered estoques/index.html.erb within layouts/application (Duration: 16.7ms | Allocations: 5358)
+  Rendered layout layouts/application.html.erb (Duration: 51.0ms | Allocations: 33534)
+Completed 200 OK in 80ms (Views: 45.8ms | ActiveRecord: 7.3ms | Allocations: 43488)
+
+
+Started GET "/estoques/new" for ::1 at 2024-09-06 16:39:59 -0300
+Processing by EstoquesController#new as HTML
+  [1m[36mProduto Pluck (0.5ms)[0m  [1m[34mSELECT "produtos"."nome", "produtos"."id" FROM "produtos"[0m
+  ↳ app/controllers/estoques_controller.rb:68:in `set_produto_options'
+  Rendering layout layouts/application.html.erb
+  Rendering estoques/new.html.erb within layouts/application
+  Rendered estoques/_form.html.erb (Duration: 6.8ms | Allocations: 2856)
+  Rendered estoques/new.html.erb within layouts/application (Duration: 8.2ms | Allocations: 3183)
+  Rendered layout layouts/application.html.erb (Duration: 14.2ms | Allocations: 8712)
+Completed 200 OK in 46ms (Views: 14.9ms | ActiveRecord: 11.6ms | Allocations: 17392)
+
+
+Started GET "/produtos/new" for ::1 at 2024-09-06 16:40:03 -0300
+Processing by ProdutosController#new as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering produtos/new.html.erb within layouts/application
+  Rendered produtos/_form.html.erb (Duration: 3.1ms | Allocations: 1243)
+  Rendered produtos/new.html.erb within layouts/application (Duration: 5.1ms | Allocations: 1523)
+  Rendered layout layouts/application.html.erb (Duration: 12.1ms | Allocations: 7054)
+Completed 200 OK in 25ms (Views: 14.0ms | ActiveRecord: 3.1ms | Allocations: 10580)
+
+
+Started POST "/produtos" for ::1 at 2024-09-06 16:40:07 -0300
+Processing by ProdutosController#create as HTML
+  Parameters: {"authenticity_token"=>"[FILTERED]", "produto"=>{"nome"=>"CAMARÃO", "desc"=>""}, "commit"=>"Create Produto"}
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/produtos_controller.rb:27:in `block in create'
+  [1m[36mProduto Create (2.6ms)[0m  [1m[32mINSERT INTO "produtos" ("nome", "desc", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["nome", "CAMARÃO"], ["desc", ""], ["created_at", "2024-09-06 19:40:07.898988"], ["updated_at", "2024-09-06 19:40:07.898988"]]
+  ↳ app/controllers/produtos_controller.rb:27:in `block in create'
+  [1m[36mTRANSACTION (0.6ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/produtos_controller.rb:27:in `block in create'
+Redirected to http://localhost:3000/produtos/1
+Completed 302 Found in 11ms (ActiveRecord: 3.3ms | Allocations: 3436)
+
+
+Started GET "/produtos/1" for ::1 at 2024-09-06 16:40:07 -0300
+Processing by ProdutosController#show as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mProduto Load (0.2ms)[0m  [1m[34mSELECT "produtos".* FROM "produtos" WHERE "produtos"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/produtos_controller.rb:63:in `set_produto'
+  Rendering layout layouts/application.html.erb
+  Rendering produtos/show.html.erb within layouts/application
+  Rendered produtos/_produto.html.erb (Duration: 0.2ms | Allocations: 182)
+  Rendered produtos/show.html.erb within layouts/application (Duration: 1.6ms | Allocations: 1131)
+  Rendered layout layouts/application.html.erb (Duration: 5.3ms | Allocations: 6655)
+Completed 200 OK in 9ms (Views: 5.5ms | ActiveRecord: 0.3ms | Allocations: 9248)
+
+
+Started GET "/estoques/new" for ::1 at 2024-09-06 16:40:09 -0300
+Processing by EstoquesController#new as HTML
+  [1m[36mProduto Pluck (0.3ms)[0m  [1m[34mSELECT "produtos"."nome", "produtos"."id" FROM "produtos"[0m
+  ↳ app/controllers/estoques_controller.rb:68:in `set_produto_options'
+  Rendering layout layouts/application.html.erb
+  Rendering estoques/new.html.erb within layouts/application
+  Rendered estoques/_form.html.erb (Duration: 1.2ms | Allocations: 1232)
+  Rendered estoques/new.html.erb within layouts/application (Duration: 1.3ms | Allocations: 1315)
+  Rendered layout layouts/application.html.erb (Duration: 5.1ms | Allocations: 6927)
+Completed 200 OK in 6ms (Views: 5.3ms | ActiveRecord: 0.3ms | Allocations: 7577)
+
+
+Started POST "/estoques" for ::1 at 2024-09-06 16:40:18 -0300
+Processing by EstoquesController#create as HTML
+  Parameters: {"authenticity_token"=>"[FILTERED]", "estoque"=>{"produto_id"=>"1", "preco_kg"=>"22.9", "quantidade"=>"23", "desc"=>"", "lote"=>"23"}, "commit"=>"Registrar"}
+  [1m[36mProduto Pluck (0.7ms)[0m  [1m[34mSELECT "produtos"."nome", "produtos"."id" FROM "produtos"[0m
+  ↳ app/controllers/estoques_controller.rb:68:in `set_produto_options'
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/estoques_controller.rb:28:in `block in create'
+  [1m[36mEstoque Create (3.9ms)[0m  [1m[32mINSERT INTO "estoques" ("preco_kg", "quantidade", "desc", "lote", "created_at", "updated_at", "produto_id") VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING "id"[0m  [["preco_kg", 22.9], ["quantidade", 23.0], ["desc", ""], ["lote", 23], ["created_at", "2024-09-06 19:40:18.302264"], ["updated_at", "2024-09-06 19:40:18.302264"], ["produto_id", 1]]
+  ↳ app/controllers/estoques_controller.rb:28:in `block in create'
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/estoques_controller.rb:28:in `block in create'
+Redirected to http://localhost:3000/estoques/1
+Completed 302 Found in 14ms (ActiveRecord: 4.9ms | Allocations: 2550)
+
+
+Started GET "/estoques/1" for ::1 at 2024-09-06 16:40:18 -0300
+Processing by EstoquesController#show as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mEstoque Load (0.3ms)[0m  [1m[34mSELECT "estoques".* FROM "estoques" WHERE "estoques"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/estoques_controller.rb:64:in `set_estoque'
+  Rendering layout layouts/application.html.erb
+  Rendering estoques/show.html.erb within layouts/application
+  Rendered estoques/_estoque.html.erb (Duration: 2.0ms | Allocations: 1782)
+  Rendered estoques/show.html.erb within layouts/application (Duration: 3.4ms | Allocations: 2407)
+  Rendered layout layouts/application.html.erb (Duration: 3.5ms | Allocations: 2498)
+Completed 500 Internal Server Error in 7ms (ActiveRecord: 0.3ms | Allocations: 3890)
+
+
+  
+ActionView::Template::Error (undefined method `produtos' for #<Estoque id: 1, preco_kg: 22.9, quantidade: 23.0, desc: "", lote: 23, created_at: "2024-09-06 19:40:18.302264000 +0000", updated_at: "2024-09-06 19:40:18.302264000 +0000", produto_id: 1>):
+    1: <div id="<%= dom_id estoque %>">
+    2:   <td>
+    3:     <%= estoque.produtos.nome %>
+    4:   </td>
+    5: 
+    6:   <td>
+  
+app/views/estoques/_estoque.html.erb:3
+app/views/estoques/show.html.erb:14
+Started GET "/estoques/1" for ::1 at 2024-09-06 16:41:10 -0300
+  [1m[36mActiveRecord::SchemaMigration Load (1.3ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by EstoquesController#show as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mEstoque Load (0.9ms)[0m  [1m[34mSELECT "estoques".* FROM "estoques" WHERE "estoques"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/estoques_controller.rb:64:in `set_estoque'
+  Rendering layout layouts/application.html.erb
+  Rendering estoques/show.html.erb within layouts/application
+  Rendered estoques/_estoque.html.erb (Duration: 1.3ms | Allocations: 1925)
+  Rendered estoques/show.html.erb within layouts/application (Duration: 6.1ms | Allocations: 4065)
+  Rendered layout layouts/application.html.erb (Duration: 6.1ms | Allocations: 4182)
+Completed 500 Internal Server Error in 65ms (ActiveRecord: 13.7ms | Allocations: 26565)
+
+
+  
+ActionView::Template::Error (undefined method `produto' for #<Estoque id: 1, preco_kg: 22.9, quantidade: 23.0, desc: "", lote: 23, created_at: "2024-09-06 19:40:18.302264000 +0000", updated_at: "2024-09-06 19:40:18.302264000 +0000", produto_id: 1>):
+    1: <div id="<%= dom_id estoque %>">
+    2:   <td>
+    3:     <%= estoque.produto.nome %>
+    4:   </td>
+    5: 
+    6:   <td>
+  
+app/views/estoques/_estoque.html.erb:3
+app/views/estoques/show.html.erb:14
+Started GET "/estoques/1" for ::1 at 2024-09-06 16:41:48 -0300
+Processing by EstoquesController#show as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mEstoque Load (0.2ms)[0m  [1m[34mSELECT "estoques".* FROM "estoques" WHERE "estoques"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/estoques_controller.rb:64:in `set_estoque'
+  Rendering layout layouts/application.html.erb
+  Rendering estoques/show.html.erb within layouts/application
+  Rendered estoques/_estoque.html.erb (Duration: 0.3ms | Allocations: 1294)
+  Rendered estoques/show.html.erb within layouts/application (Duration: 1.3ms | Allocations: 1923)
+  Rendered layout layouts/application.html.erb (Duration: 1.4ms | Allocations: 2015)
+Completed 500 Internal Server Error in 15ms (ActiveRecord: 8.0ms | Allocations: 8063)
+
+
+  
+ActionView::Template::Error (undefined method `nome' for 1:Integer):
+    1: <div id="<%= dom_id estoque %>">
+    2:   <td>
+    3:     <%= estoque.produto_id.nome %>
+    4:   </td>
+    5: 
+    6:   <td>
+  
+app/views/estoques/_estoque.html.erb:3
+app/views/estoques/show.html.erb:14
+Started GET "/estoques/1" for ::1 at 2024-09-06 16:45:18 -0300
+  [1m[36mActiveRecord::SchemaMigration Load (1.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by EstoquesController#show as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mEstoque Load (0.6ms)[0m  [1m[34mSELECT "estoques".* FROM "estoques" WHERE "estoques"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/estoques_controller.rb:65:in `set_estoque'
+Completed 404 Not Found in 44ms (ActiveRecord: 12.8ms | Allocations: 20061)
+
+
+  
+ActiveRecord::RecordNotFound (Couldn't find Produto without an ID):
+  
+app/controllers/estoques_controller.rb:12:in `show'
+Started GET "/estoques/1" for ::1 at 2024-09-06 16:46:19 -0300
+Processing by EstoquesController#show as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mEstoque Load (0.2ms)[0m  [1m[34mSELECT "estoques".* FROM "estoques" WHERE "estoques"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/estoques_controller.rb:64:in `set_estoque'
+  Rendering layout layouts/application.html.erb
+  Rendering estoques/show.html.erb within layouts/application
+  Rendered estoques/_estoque.html.erb (Duration: 0.7ms | Allocations: 1575)
+  Rendered estoques/show.html.erb within layouts/application (Duration: 2.2ms | Allocations: 2387)
+  Rendered layout layouts/application.html.erb (Duration: 2.2ms | Allocations: 2482)
+Completed 500 Internal Server Error in 16ms (ActiveRecord: 8.2ms | Allocations: 8650)
+
+
+  
+ActionView::Template::Error (undefined method `produto' for #<Estoque id: 1, preco_kg: 22.9, quantidade: 23.0, desc: "", lote: 23, created_at: "2024-09-06 19:40:18.302264000 +0000", updated_at: "2024-09-06 19:40:18.302264000 +0000", produto_id: 1>):
+    1: <div id="<%= dom_id estoque %>">
+    2:   <td>
+    3:     <%= estoque.produto %>
+    4:   </td>
+    5: 
+    6:   <td>
+  
+app/views/estoques/_estoque.html.erb:3
+app/views/estoques/show.html.erb:14
+Started GET "/estoques/1" for ::1 at 2024-09-06 16:47:08 -0300
+Processing by EstoquesController#show as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mEstoque Load (0.2ms)[0m  [1m[34mSELECT "estoques".* FROM "estoques" WHERE "estoques"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/estoques_controller.rb:64:in `set_estoque'
+  Rendering layout layouts/application.html.erb
+  Rendering estoques/show.html.erb within layouts/application
+  [1m[36mProduto Pluck (0.7ms)[0m  [1m[34mSELECT "produtos"."nome" FROM "produtos"[0m
+  ↳ app/views/estoques/_estoque.html.erb:3
+  Rendered estoques/_estoque.html.erb (Duration: 4.0ms | Allocations: 1386)
+  Rendered estoques/show.html.erb within layouts/application (Duration: 5.4ms | Allocations: 2408)
+  Rendered layout layouts/application.html.erb (Duration: 42.4ms | Allocations: 30551)
+Completed 200 OK in 59ms (Views: 41.1ms | ActiveRecord: 9.7ms | Allocations: 36656)
+
+
+Started GET "/estoques/1" for ::1 at 2024-09-06 16:47:24 -0300
+Processing by EstoquesController#show as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mEstoque Load (0.9ms)[0m  [1m[34mSELECT "estoques".* FROM "estoques" WHERE "estoques"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/estoques_controller.rb:64:in `set_estoque'
+  Rendering layout layouts/application.html.erb
+  Rendering estoques/show.html.erb within layouts/application
+  [1m[36mProduto Pluck (0.6ms)[0m  [1m[34mSELECT "produtos"."nome" FROM "produtos"[0m
+  ↳ app/views/estoques/_estoque.html.erb:3
+  Rendered estoques/_estoque.html.erb (Duration: 4.4ms | Allocations: 1340)
+  Rendered estoques/show.html.erb within layouts/application (Duration: 6.8ms | Allocations: 2190)
+  Rendered layout layouts/application.html.erb (Duration: 11.7ms | Allocations: 8104)
+Completed 200 OK in 26ms (Views: 9.6ms | ActiveRecord: 11.1ms | Allocations: 14147)
+
+
+Started GET "/estoques/1" for ::1 at 2024-09-06 16:48:49 -0300
+Processing by EstoquesController#show as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mEstoque Load (1.5ms)[0m  [1m[34mSELECT "estoques".* FROM "estoques" WHERE "estoques"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/estoques_controller.rb:65:in `set_estoque'
+  [1m[36mProduto Load (0.2ms)[0m  [1m[34mSELECT "produtos".* FROM "produtos" WHERE "produtos"."id" IS NULL LIMIT $1[0m  [["LIMIT", 1]]
+  ↳ app/controllers/estoques_controller.rb:12:in `show'
+  Rendering layout layouts/application.html.erb
+  Rendering estoques/show.html.erb within layouts/application
+  Rendered estoques/_estoque.html.erb (Duration: 0.4ms | Allocations: 1288)
+  Rendered estoques/show.html.erb within layouts/application (Duration: 1.2ms | Allocations: 1912)
+  Rendered layout layouts/application.html.erb (Duration: 1.2ms | Allocations: 2004)
+Completed 500 Internal Server Error in 19ms (ActiveRecord: 11.7ms | Allocations: 9439)
+
+
+  
+ActionView::Template::Error (undefined method `nome' for nil:NilClass):
+    1: <div id="<%= dom_id estoque %>">
+    2:   <td>
+    3:     <%= @produto.nome %>
+    4:   </td>
+    5: 
+    6:   <td>
+  
+app/views/estoques/_estoque.html.erb:3
+app/views/estoques/show.html.erb:14
+Started GET "/estoques/1" for ::1 at 2024-09-06 16:49:20 -0300
+Processing by EstoquesController#show as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mEstoque Load (0.2ms)[0m  [1m[34mSELECT "estoques".* FROM "estoques" WHERE "estoques"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/estoques_controller.rb:65:in `set_estoque'
+  [1m[36mProduto Load (0.2ms)[0m  [1m[34mSELECT "produtos".* FROM "produtos" WHERE "produtos"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/estoques_controller.rb:12:in `show'
+  Rendering layout layouts/application.html.erb
+  Rendering estoques/show.html.erb within layouts/application
+  Rendered estoques/_estoque.html.erb (Duration: 0.2ms | Allocations: 251)
+  Rendered estoques/show.html.erb within layouts/application (Duration: 1.6ms | Allocations: 1109)
+  Rendered layout layouts/application.html.erb (Duration: 5.7ms | Allocations: 7106)
+Completed 200 OK in 34ms (Views: 6.9ms | ActiveRecord: 18.1ms | Allocations: 17858)
+
+
+Started GET "/produtos/new" for ::1 at 2024-09-06 16:49:24 -0300
+Processing by ProdutosController#new as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering produtos/new.html.erb within layouts/application
+  Rendered produtos/_form.html.erb (Duration: 8.5ms | Allocations: 1891)
+  Rendered produtos/new.html.erb within layouts/application (Duration: 11.0ms | Allocations: 2171)
+  Rendered layout layouts/application.html.erb (Duration: 18.7ms | Allocations: 7702)
+Completed 200 OK in 22ms (Views: 20.1ms | ActiveRecord: 0.0ms | Allocations: 8251)
+
+
+Started POST "/produtos" for ::1 at 2024-09-06 16:49:30 -0300
+Processing by ProdutosController#create as HTML
+  Parameters: {"authenticity_token"=>"[FILTERED]", "produto"=>{"nome"=>"FILEZINHO", "desc"=>""}, "commit"=>"Create Produto"}
+  [1m[36mTRANSACTION (0.8ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/produtos_controller.rb:27:in `block in create'
+  [1m[36mProduto Create (5.0ms)[0m  [1m[32mINSERT INTO "produtos" ("nome", "desc", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["nome", "FILEZINHO"], ["desc", ""], ["created_at", "2024-09-06 19:49:30.882612"], ["updated_at", "2024-09-06 19:49:30.882612"]]
+  ↳ app/controllers/produtos_controller.rb:27:in `block in create'
+  [1m[36mTRANSACTION (0.9ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/produtos_controller.rb:27:in `block in create'
+Redirected to http://localhost:3000/produtos/2
+Completed 302 Found in 14ms (ActiveRecord: 6.7ms | Allocations: 3240)
+
+
+Started GET "/produtos/2" for ::1 at 2024-09-06 16:49:30 -0300
+Processing by ProdutosController#show as HTML
+  Parameters: {"id"=>"2"}
+  [1m[36mProduto Load (0.4ms)[0m  [1m[34mSELECT "produtos".* FROM "produtos" WHERE "produtos"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/controllers/produtos_controller.rb:63:in `set_produto'
+  Rendering layout layouts/application.html.erb
+  Rendering produtos/show.html.erb within layouts/application
+  Rendered produtos/_produto.html.erb (Duration: 0.4ms | Allocations: 163)
+  Rendered produtos/show.html.erb within layouts/application (Duration: 2.6ms | Allocations: 949)
+  Rendered layout layouts/application.html.erb (Duration: 9.2ms | Allocations: 6473)
+Completed 200 OK in 12ms (Views: 9.5ms | ActiveRecord: 0.4ms | Allocations: 7220)
+
+
+Started GET "/produtos" for ::1 at 2024-09-06 16:49:33 -0300
+Processing by ProdutosController#index as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering produtos/index.html.erb within layouts/application
+  [1m[36mProduto Load (0.4ms)[0m  [1m[34mSELECT "produtos".* FROM "produtos"[0m
+  ↳ app/views/produtos/index.html.erb:15
+  Rendered produtos/_produto.html.erb (Duration: 0.1ms | Allocations: 18)
+  Rendered produtos/_produto.html.erb (Duration: 0.0ms | Allocations: 17)
+  Rendered produtos/index.html.erb within layouts/application (Duration: 2.8ms | Allocations: 1181)
+  Rendered layout layouts/application.html.erb (Duration: 14.9ms | Allocations: 6711)
+Completed 200 OK in 17ms (Views: 15.0ms | ActiveRecord: 0.4ms | Allocations: 7046)
+
+
+Started GET "/produtos/new" for ::1 at 2024-09-06 16:49:34 -0300
+Processing by ProdutosController#new as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering produtos/new.html.erb within layouts/application
+  Rendered produtos/_form.html.erb (Duration: 2.4ms | Allocations: 748)
+  Rendered produtos/new.html.erb within layouts/application (Duration: 2.7ms | Allocations: 827)
+  Rendered layout layouts/application.html.erb (Duration: 12.8ms | Allocations: 6379)
+Completed 200 OK in 14ms (Views: 13.5ms | ActiveRecord: 0.0ms | Allocations: 6628)
+
+
+Started POST "/produtos" for ::1 at 2024-09-06 16:49:39 -0300
+Processing by ProdutosController#create as HTML
+  Parameters: {"authenticity_token"=>"[FILTERED]", "produto"=>{"nome"=>"FILE DE MERLUZA", "desc"=>""}, "commit"=>"Create Produto"}
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/produtos_controller.rb:27:in `block in create'
+  [1m[36mProduto Create (2.3ms)[0m  [1m[32mINSERT INTO "produtos" ("nome", "desc", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["nome", "FILE DE MERLUZA"], ["desc", ""], ["created_at", "2024-09-06 19:49:39.788547"], ["updated_at", "2024-09-06 19:49:39.788547"]]
+  ↳ app/controllers/produtos_controller.rb:27:in `block in create'
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/produtos_controller.rb:27:in `block in create'
+Redirected to http://localhost:3000/produtos/3
+Completed 302 Found in 7ms (ActiveRecord: 3.2ms | Allocations: 1964)
+
+
+Started GET "/produtos/3" for ::1 at 2024-09-06 16:49:39 -0300
+Processing by ProdutosController#show as HTML
+  Parameters: {"id"=>"3"}
+  [1m[36mProduto Load (0.4ms)[0m  [1m[34mSELECT "produtos".* FROM "produtos" WHERE "produtos"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  ↳ app/controllers/produtos_controller.rb:63:in `set_produto'
+  Rendering layout layouts/application.html.erb
+  Rendering produtos/show.html.erb within layouts/application
+  Rendered produtos/_produto.html.erb (Duration: 0.1ms | Allocations: 18)
+  Rendered produtos/show.html.erb within layouts/application (Duration: 1.4ms | Allocations: 488)
+  Rendered layout layouts/application.html.erb (Duration: 8.8ms | Allocations: 6018)
+Completed 200 OK in 11ms (Views: 9.2ms | ActiveRecord: 0.4ms | Allocations: 6676)
+
+
+Started GET "/estoques/new" for ::1 at 2024-09-06 16:49:43 -0300
+Processing by EstoquesController#new as HTML
+  [1m[36mProduto Pluck (0.7ms)[0m  [1m[34mSELECT "produtos"."nome", "produtos"."id" FROM "produtos"[0m
+  ↳ app/controllers/estoques_controller.rb:69:in `set_produto_options'
+  Rendering layout layouts/application.html.erb
+  Rendering estoques/new.html.erb within layouts/application
+  Rendered estoques/_form.html.erb (Duration: 8.6ms | Allocations: 2190)
+  Rendered estoques/new.html.erb within layouts/application (Duration: 10.5ms | Allocations: 2481)
+  Rendered layout layouts/application.html.erb (Duration: 17.4ms | Allocations: 8009)
+Completed 200 OK in 22ms (Views: 18.0ms | ActiveRecord: 0.7ms | Allocations: 8732)
+
+
+Started POST "/estoques" for ::1 at 2024-09-06 16:49:53 -0300
+Processing by EstoquesController#create as HTML
+  Parameters: {"authenticity_token"=>"[FILTERED]", "estoque"=>{"produto_id"=>"3", "preco_kg"=>"22", "quantidade"=>"22", "desc"=>"", "lote"=>"22"}, "commit"=>"Registrar"}
+  [1m[36mProduto Pluck (0.8ms)[0m  [1m[34mSELECT "produtos"."nome", "produtos"."id" FROM "produtos"[0m
+  ↳ app/controllers/estoques_controller.rb:69:in `set_produto_options'
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/estoques_controller.rb:29:in `block in create'
+  [1m[36mEstoque Create (4.8ms)[0m  [1m[32mINSERT INTO "estoques" ("preco_kg", "quantidade", "desc", "lote", "created_at", "updated_at", "produto_id") VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING "id"[0m  [["preco_kg", 22.0], ["quantidade", 22.0], ["desc", ""], ["lote", 22], ["created_at", "2024-09-06 19:49:53.181139"], ["updated_at", "2024-09-06 19:49:53.181139"], ["produto_id", 3]]
+  ↳ app/controllers/estoques_controller.rb:29:in `block in create'
+  [1m[36mTRANSACTION (0.5ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/estoques_controller.rb:29:in `block in create'
+Redirected to http://localhost:3000/estoques/2
+Completed 302 Found in 15ms (ActiveRecord: 6.2ms | Allocations: 2538)
+
+
+Started GET "/estoques/2" for ::1 at 2024-09-06 16:49:53 -0300
+Processing by EstoquesController#show as HTML
+  Parameters: {"id"=>"2"}
+  [1m[36mEstoque Load (0.1ms)[0m  [1m[34mSELECT "estoques".* FROM "estoques" WHERE "estoques"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/controllers/estoques_controller.rb:65:in `set_estoque'
+  [1m[36mProduto Load (0.2ms)[0m  [1m[34mSELECT "produtos".* FROM "produtos" WHERE "produtos"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  ↳ app/controllers/estoques_controller.rb:12:in `show'
+  Rendering layout layouts/application.html.erb
+  Rendering estoques/show.html.erb within layouts/application
+  Rendered estoques/_estoque.html.erb (Duration: 0.1ms | Allocations: 24)
+  Rendered estoques/show.html.erb within layouts/application (Duration: 1.0ms | Allocations: 491)
+  Rendered layout layouts/application.html.erb (Duration: 5.2ms | Allocations: 6015)
+Completed 200 OK in 7ms (Views: 5.5ms | ActiveRecord: 0.3ms | Allocations: 7110)
+
+
+Started GET "/estoques" for ::1 at 2024-09-06 16:49:54 -0300
+Processing by EstoquesController#index as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering estoques/index.html.erb within layouts/application
+  [1m[36mEstoque Load (0.6ms)[0m  [1m[34mSELECT "estoques".* FROM "estoques"[0m
+  ↳ app/views/estoques/index.html.erb:19
+  Rendered estoques/_estoque.html.erb (Duration: 0.8ms | Allocations: 1179)
+  Rendered estoques/index.html.erb within layouts/application (Duration: 5.2ms | Allocations: 2175)
+  Rendered layout layouts/application.html.erb (Duration: 6.0ms | Allocations: 2266)
+Completed 500 Internal Server Error in 9ms (ActiveRecord: 0.6ms | Allocations: 2599)
+
+
+  
+ActionView::Template::Error (undefined method `nome' for nil:NilClass):
+    1: <div id="<%= dom_id estoque %>">
+    2:   <td>
+    3:     <%= @produto.nome %>
+    4:   </td>
+    5: 
+    6:   <td>
+  
+app/views/estoques/_estoque.html.erb:3
+app/views/estoques/index.html.erb:21
+app/views/estoques/index.html.erb:19
+Started GET "/estoques" for ::1 at 2024-09-06 16:49:59 -0300
+Processing by EstoquesController#index as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering estoques/index.html.erb within layouts/application
+  [1m[36mEstoque Load (0.4ms)[0m  [1m[34mSELECT "estoques".* FROM "estoques"[0m
+  ↳ app/views/estoques/index.html.erb:19
+  Rendered estoques/_estoque.html.erb (Duration: 0.4ms | Allocations: 1174)
+  Rendered estoques/index.html.erb within layouts/application (Duration: 2.3ms | Allocations: 1912)
+  Rendered layout layouts/application.html.erb (Duration: 2.4ms | Allocations: 2003)
+Completed 500 Internal Server Error in 3ms (ActiveRecord: 0.3ms | Allocations: 2241)
+
+
+  
+ActionView::Template::Error (undefined method `nome' for nil:NilClass):
+    1: <div id="<%= dom_id estoque %>">
+    2:   <td>
+    3:     <%= @produto.nome %>
+    4:   </td>
+    5: 
+    6:   <td>
+  
+app/views/estoques/_estoque.html.erb:3
+app/views/estoques/index.html.erb:21
+app/views/estoques/index.html.erb:19
+Started GET "/estoques" for ::1 at 2024-09-06 16:53:42 -0300
+  [1m[36mActiveRecord::SchemaMigration Load (1.0ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by EstoquesController#index as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering estoques/index.html.erb within layouts/application
+  [1m[36mEstoque Load (1.1ms)[0m  [1m[34mSELECT "estoques".* FROM "estoques"[0m
+  ↳ app/views/estoques/index.html.erb:19
+  Rendered estoques/_estoque.html.erb (Duration: 1.6ms | Allocations: 2228)
+  Rendered estoques/index.html.erb within layouts/application (Duration: 52.6ms | Allocations: 15060)
+  Rendered layout layouts/application.html.erb (Duration: 52.7ms | Allocations: 15177)
+Completed 500 Internal Server Error in 65ms (ActiveRecord: 22.0ms | Allocations: 25087)
+
+
+  
+ActionView::Template::Error (Unsupported argument type: 1 (Integer)):
+    1: <div id="<%= dom_id estoque %>">
+    2:   <td>
+    3:     <%= Produto.find_by(estoque.produto_id).nome %>
+    4:   </td>
+    5: 
+    6:   <td>
+  
+app/views/estoques/_estoque.html.erb:3
+app/views/estoques/index.html.erb:21
+app/views/estoques/index.html.erb:19
+Started GET "/estoques" for ::1 at 2024-09-06 16:55:21 -0300
+Processing by EstoquesController#index as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering estoques/index.html.erb within layouts/application
+  [1m[36mEstoque Load (0.6ms)[0m  [1m[34mSELECT "estoques".* FROM "estoques"[0m
+  ↳ app/views/estoques/index.html.erb:19
+  [1m[36mProduto Pluck (0.7ms)[0m  [1m[34mSELECT "produtos"."nome" FROM "produtos" WHERE "produtos"."id" = $1[0m  [["id", 1]]
+  ↳ app/views/estoques/_estoque.html.erb:3
+  Rendered estoques/_estoque.html.erb (Duration: 5.4ms | Allocations: 2577)
+  [1m[36mProduto Pluck (0.1ms)[0m  [1m[34mSELECT "produtos"."nome" FROM "produtos" WHERE "produtos"."id" = $1[0m  [["id", 3]]
+  ↳ app/views/estoques/_estoque.html.erb:3
+  Rendered estoques/_estoque.html.erb (Duration: 0.4ms | Allocations: 468)
+  Rendered estoques/index.html.erb within layouts/application (Duration: 13.9ms | Allocations: 8004)
+  Rendered layout layouts/application.html.erb (Duration: 56.7ms | Allocations: 36653)
+Completed 200 OK in 60ms (Views: 50.8ms | ActiveRecord: 7.2ms | Allocations: 38267)
+
+
+Started GET "/estoques" for ::1 at 2024-09-06 17:32:35 -0300
+  [1m[36mActiveRecord::SchemaMigration Load (2.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by EstoquesController#index as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering estoques/index.html.erb within layouts/application
+  [1m[36mEstoque Load (13.6ms)[0m  [1m[34mSELECT "estoques".* FROM "estoques"[0m
+  ↳ app/views/estoques/index.html.erb:19
+  [1m[36mProduto Pluck (0.7ms)[0m  [1m[34mSELECT "produtos"."nome" FROM "produtos" WHERE "produtos"."id" = $1[0m  [["id", 1]]
+  ↳ app/views/estoques/_estoque.html.erb:3
+  Rendered estoques/_estoque.html.erb (Duration: 23.9ms | Allocations: 2708)
+  [1m[36mProduto Pluck (0.1ms)[0m  [1m[34mSELECT "produtos"."nome" FROM "produtos" WHERE "produtos"."id" = $1[0m  [["id", 3]]
+  ↳ app/views/estoques/_estoque.html.erb:3
+  Rendered estoques/_estoque.html.erb (Duration: 0.5ms | Allocations: 468)
+  Rendered estoques/index.html.erb within layouts/application (Duration: 70.5ms | Allocations: 16325)
+  Rendered layout layouts/application.html.erb (Duration: 95.0ms | Allocations: 44851)
+Completed 200 OK in 125ms (Views: 65.0ms | ActiveRecord: 32.1ms | Allocations: 54801)
+
+
+Started GET "/produtos/new" for ::1 at 2024-09-06 17:32:38 -0300
+Processing by ProdutosController#new as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering produtos/new.html.erb within layouts/application
+  Rendered produtos/_form.html.erb (Duration: 5.3ms | Allocations: 1951)
+  Rendered produtos/new.html.erb within layouts/application (Duration: 6.5ms | Allocations: 2238)
+  Rendered layout layouts/application.html.erb (Duration: 11.8ms | Allocations: 7769)
+Completed 200 OK in 26ms (Views: 12.9ms | ActiveRecord: 4.4ms | Allocations: 11321)
+
+
+Started GET "/produtos" for ::1 at 2024-09-06 17:32:41 -0300
+Processing by ProdutosController#index as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering produtos/index.html.erb within layouts/application
+  [1m[36mProduto Load (0.6ms)[0m  [1m[34mSELECT "produtos".* FROM "produtos"[0m
+  ↳ app/views/produtos/index.html.erb:15
+  Rendered produtos/_produto.html.erb (Duration: 0.7ms | Allocations: 167)
+  Rendered produtos/_produto.html.erb (Duration: 0.1ms | Allocations: 17)
+  Rendered produtos/_produto.html.erb (Duration: 0.0ms | Allocations: 17)
+  Rendered produtos/index.html.erb within layouts/application (Duration: 7.2ms | Allocations: 1577)
+  Rendered layout layouts/application.html.erb (Duration: 14.7ms | Allocations: 7106)
+Completed 200 OK in 17ms (Views: 15.0ms | ActiveRecord: 0.6ms | Allocations: 7448)
+
+
+Started GET "/estoques/new" for ::1 at 2024-09-06 17:32:43 -0300
+Processing by EstoquesController#new as HTML
+  [1m[36mProduto Pluck (1.6ms)[0m  [1m[34mSELECT "produtos"."nome", "produtos"."id" FROM "produtos"[0m
+  ↳ app/controllers/estoques_controller.rb:68:in `set_produto_options'
+  Rendering layout layouts/application.html.erb
+  Rendering estoques/new.html.erb within layouts/application
+  Rendered estoques/_form.html.erb (Duration: 8.5ms | Allocations: 2206)
+  Rendered estoques/new.html.erb within layouts/application (Duration: 11.4ms | Allocations: 2496)
+  Rendered layout layouts/application.html.erb (Duration: 18.5ms | Allocations: 8024)
+Completed 200 OK in 26ms (Views: 19.4ms | ActiveRecord: 1.5ms | Allocations: 8755)
+
+
+Started GET "/" for ::1 at 2024-09-06 18:16:56 -0300
+  [1m[36mActiveRecord::SchemaMigration Load (37.9ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by HomeController#index as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering home/index.html.erb within layouts/application
+  [1m[36mProduto Load (41.5ms)[0m  [1m[34mSELECT "produtos".* FROM "produtos"[0m
+  ↳ app/views/home/index.html.erb:14
+  [1m[36mEstoque Load (1.7ms)[0m  [1m[34mSELECT "estoques".* FROM "estoques"[0m
+  ↳ app/views/home/index.html.erb:18
+  Rendered home/index.html.erb within layouts/application (Duration: 156.4ms | Allocations: 15337)
+  Rendered layout layouts/application.html.erb (Duration: 193.7ms | Allocations: 45168)
+Completed 200 OK in 234ms (Views: 106.0ms | ActiveRecord: 92.9ms | Allocations: 55411)
+
+
+Started GET "/" for ::1 at 2024-09-06 18:17:19 -0300
+Processing by HomeController#index as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering home/index.html.erb within layouts/application
+  [1m[36mProduto Load (18.9ms)[0m  [1m[34mSELECT "produtos".* FROM "produtos"[0m
+  ↳ app/views/home/index.html.erb:14
+  [1m[36mEstoque Load (0.1ms)[0m  [1m[34mSELECT "estoques".* FROM "estoques"[0m
+  ↳ app/views/home/index.html.erb:18
+  Rendered home/index.html.erb within layouts/application (Duration: 28.3ms | Allocations: 7117)
+  Rendered layout layouts/application.html.erb (Duration: 32.9ms | Allocations: 13340)
+Completed 200 OK in 37ms (Views: 9.4ms | ActiveRecord: 24.4ms | Allocations: 15155)
+
+
+Started GET "/" for ::1 at 2024-09-06 18:17:52 -0300
+Processing by HomeController#index as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering home/index.html.erb within layouts/application
+  [1m[36mProduto Load (0.8ms)[0m  [1m[34mSELECT "produtos".* FROM "produtos"[0m
+  ↳ app/views/home/index.html.erb:13
+  [1m[36mEstoque Load (0.2ms)[0m  [1m[34mSELECT "estoques".* FROM "estoques"[0m
+  ↳ app/views/home/index.html.erb:18
+  Rendered home/index.html.erb within layouts/application (Duration: 13.1ms | Allocations: 7181)
+  Rendered layout layouts/application.html.erb (Duration: 18.0ms | Allocations: 13497)
+Completed 200 OK in 22ms (Views: 9.2ms | ActiveRecord: 9.7ms | Allocations: 15317)
+
+
+Started GET "/" for ::1 at 2024-09-06 18:18:21 -0300
+Processing by HomeController#index as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering home/index.html.erb within layouts/application
+  [1m[36mProduto Load (11.2ms)[0m  [1m[34mSELECT "produtos".* FROM "produtos"[0m
+  ↳ app/views/home/index.html.erb:13
+  [1m[36mEstoque Load (0.1ms)[0m  [1m[34mSELECT "estoques".* FROM "estoques"[0m
+  ↳ app/views/home/index.html.erb:17
+  Rendered home/index.html.erb within layouts/application (Duration: 26.0ms | Allocations: 7121)
+  Rendered layout layouts/application.html.erb (Duration: 29.8ms | Allocations: 13354)
+Completed 200 OK in 34ms (Views: 8.9ms | ActiveRecord: 21.8ms | Allocations: 15168)
+
+
+Started GET "/" for ::1 at 2024-09-06 18:19:50 -0300
+Processing by HomeController#index as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering home/index.html.erb within layouts/application
+  [1m[36mEstoque Load (15.5ms)[0m  [1m[34mSELECT "estoques".* FROM "estoques"[0m
+  ↳ app/views/home/index.html.erb:13
+  [1m[36mProduto Pluck (0.1ms)[0m  [1m[34mSELECT "produtos"."nome" FROM "produtos" WHERE "produtos"."id" = $1[0m  [["id", 1]]
+  ↳ app/views/home/index.html.erb:15
+  [1m[36mProduto Pluck (0.1ms)[0m  [1m[34mSELECT "produtos"."nome" FROM "produtos" WHERE "produtos"."id" = $1[0m  [["id", 3]]
+  ↳ app/views/home/index.html.erb:15
+  Rendered home/index.html.erb within layouts/application (Duration: 27.1ms | Allocations: 6467)
+  Rendered layout layouts/application.html.erb (Duration: 31.8ms | Allocations: 12786)
+Completed 200 OK in 35ms (Views: 11.6ms | ActiveRecord: 21.2ms | Allocations: 14606)
+
+
+Started GET "/" for ::1 at 2024-09-06 18:20:43 -0300
+Processing by HomeController#index as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering home/index.html.erb within layouts/application
+  [1m[36mEstoque Load (1.0ms)[0m  [1m[34mSELECT "estoques".* FROM "estoques"[0m
+  ↳ app/views/home/index.html.erb:14
+  [1m[36mProduto Pluck (0.3ms)[0m  [1m[34mSELECT "produtos"."nome" FROM "produtos" WHERE "produtos"."id" = $1[0m  [["id", 1]]
+  ↳ app/views/home/index.html.erb:16
+  [1m[36mProduto Pluck (1.2ms)[0m  [1m[34mSELECT "produtos"."nome" FROM "produtos" WHERE "produtos"."id" = $1[0m  [["id", 3]]
+  ↳ app/views/home/index.html.erb:16
+  Rendered home/index.html.erb within layouts/application (Duration: 13.5ms | Allocations: 5363)
+  Rendered layout layouts/application.html.erb (Duration: 18.8ms | Allocations: 11605)
+Completed 200 OK in 22ms (Views: 9.6ms | ActiveRecord: 10.1ms | Allocations: 13415)
+
+
+Started GET "/" for ::1 at 2024-09-06 18:21:43 -0300
+Processing by HomeController#index as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering home/index.html.erb within layouts/application
+  [1m[36mEstoque Load (0.8ms)[0m  [1m[34mSELECT "estoques".* FROM "estoques"[0m
+  ↳ app/views/home/index.html.erb:14
+  [1m[36mProduto Pluck (0.2ms)[0m  [1m[34mSELECT "produtos"."nome" FROM "produtos" WHERE "produtos"."id" = $1[0m  [["id", 1]]
+  ↳ app/views/home/index.html.erb:16
+  [1m[36mProduto Pluck (0.1ms)[0m  [1m[34mSELECT "produtos"."nome" FROM "produtos" WHERE "produtos"."id" = $1[0m  [["id", 3]]
+  ↳ app/views/home/index.html.erb:16
+  Rendered home/index.html.erb within layouts/application (Duration: 10.2ms | Allocations: 5545)
+  Rendered layout layouts/application.html.erb (Duration: 14.8ms | Allocations: 11822)
+Completed 200 OK in 19ms (Views: 9.0ms | ActiveRecord: 6.7ms | Allocations: 13640)
+
+
+Started GET "/estoques/1" for ::1 at 2024-09-06 18:21:45 -0300
+Processing by EstoquesController#show as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mEstoque Load (0.3ms)[0m  [1m[34mSELECT "estoques".* FROM "estoques" WHERE "estoques"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/estoques_controller.rb:64:in `set_estoque'
+  Rendering layout layouts/application.html.erb
+  Rendering estoques/show.html.erb within layouts/application
+  [1m[36mProduto Pluck (0.3ms)[0m  [1m[34mSELECT "produtos"."nome" FROM "produtos" WHERE "produtos"."id" = $1[0m  [["id", 1]]
+  ↳ app/views/estoques/_estoque.html.erb:3
+  Rendered estoques/_estoque.html.erb (Duration: 2.1ms | Allocations: 715)
+  Rendered estoques/show.html.erb within layouts/application (Duration: 6.3ms | Allocations: 1815)
+  Rendered layout layouts/application.html.erb (Duration: 13.2ms | Allocations: 7342)
+Completed 200 OK in 21ms (Views: 14.6ms | ActiveRecord: 0.6ms | Allocations: 9399)
+
+
+Started GET "/estoques" for ::1 at 2024-09-06 18:21:48 -0300
+Processing by EstoquesController#index as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering estoques/index.html.erb within layouts/application
+  [1m[36mEstoque Load (0.4ms)[0m  [1m[34mSELECT "estoques".* FROM "estoques"[0m
+  ↳ app/views/estoques/index.html.erb:19
+  [1m[36mProduto Pluck (0.1ms)[0m  [1m[34mSELECT "produtos"."nome" FROM "produtos" WHERE "produtos"."id" = $1[0m  [["id", 1]]
+  ↳ app/views/estoques/_estoque.html.erb:3
+  Rendered estoques/_estoque.html.erb (Duration: 2.4ms | Allocations: 1422)
+  [1m[36mProduto Pluck (0.1ms)[0m  [1m[34mSELECT "produtos"."nome" FROM "produtos" WHERE "produtos"."id" = $1[0m  [["id", 3]]
+  ↳ app/views/estoques/_estoque.html.erb:3
+  Rendered estoques/_estoque.html.erb (Duration: 0.4ms | Allocations: 468)
+  Rendered estoques/index.html.erb within layouts/application (Duration: 11.4ms | Allocations: 6718)
+  Rendered layout layouts/application.html.erb (Duration: 14.0ms | Allocations: 12653)
+Completed 200 OK in 17ms (Views: 7.0ms | ActiveRecord: 7.8ms | Allocations: 14221)
+
+
+Started GET "/estoques" for ::1 at 2024-09-06 18:22:55 -0300
+Processing by EstoquesController#index as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering estoques/index.html.erb within layouts/application
+  [1m[36mEstoque Load (12.7ms)[0m  [1m[34mSELECT "estoques".* FROM "estoques"[0m
+  ↳ app/views/estoques/index.html.erb:19
+  [1m[36mProduto Pluck (0.1ms)[0m  [1m[34mSELECT "produtos"."nome" FROM "produtos" WHERE "produtos"."id" = $1[0m  [["id", 1]]
+  ↳ app/views/estoques/_estoque.html.erb:3
+  Rendered estoques/_estoque.html.erb (Duration: 2.1ms | Allocations: 1423)
+  [1m[36mProduto Pluck (0.1ms)[0m  [1m[34mSELECT "produtos"."nome" FROM "produtos" WHERE "produtos"."id" = $1[0m  [["id", 3]]
+  ↳ app/views/estoques/_estoque.html.erb:3
+  Rendered estoques/_estoque.html.erb (Duration: 0.6ms | Allocations: 468)
+  Rendered estoques/index.html.erb within layouts/application (Duration: 26.4ms | Allocations: 6764)
+  Rendered layout layouts/application.html.erb (Duration: 31.1ms | Allocations: 12829)
+Completed 200 OK in 34ms (Views: 11.7ms | ActiveRecord: 20.2ms | Allocations: 14403)
+
+
+Started GET "/home/index" for ::1 at 2024-09-06 18:22:57 -0300
+Processing by HomeController#index as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering home/index.html.erb within layouts/application
+  [1m[36mEstoque Load (0.4ms)[0m  [1m[34mSELECT "estoques".* FROM "estoques"[0m
+  ↳ app/views/home/index.html.erb:14
+  [1m[36mProduto Pluck (0.5ms)[0m  [1m[34mSELECT "produtos"."nome" FROM "produtos" WHERE "produtos"."id" = $1[0m  [["id", 1]]
+  ↳ app/views/home/index.html.erb:16
+  [1m[36mProduto Pluck (0.1ms)[0m  [1m[34mSELECT "produtos"."nome" FROM "produtos" WHERE "produtos"."id" = $1[0m  [["id", 3]]
+  ↳ app/views/home/index.html.erb:16
+  Rendered home/index.html.erb within layouts/application (Duration: 5.0ms | Allocations: 1597)
+  Rendered layout layouts/application.html.erb (Duration: 12.4ms | Allocations: 7430)
+Completed 200 OK in 15ms (Views: 12.3ms | ActiveRecord: 1.0ms | Allocations: 7896)
+
+
+Started GET "/home/index" for ::1 at 2024-09-06 18:23:45 -0300
+Processing by HomeController#index as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering home/index.html.erb within layouts/application
+  [1m[36mEstoque Load (1.0ms)[0m  [1m[34mSELECT "estoques".* FROM "estoques"[0m
+  ↳ app/views/home/index.html.erb:14
+  [1m[36mProduto Pluck (0.1ms)[0m  [1m[34mSELECT "produtos"."nome" FROM "produtos" WHERE "produtos"."id" = $1[0m  [["id", 1]]
+  ↳ app/views/home/index.html.erb:16
+  [1m[36mProduto Pluck (0.1ms)[0m  [1m[34mSELECT "produtos"."nome" FROM "produtos" WHERE "produtos"."id" = $1[0m  [["id", 3]]
+  ↳ app/views/home/index.html.erb:16
+  Rendered home/index.html.erb within layouts/application (Duration: 11.3ms | Allocations: 5468)
+  Rendered layout layouts/application.html.erb (Duration: 19.0ms | Allocations: 11759)
+Completed 200 OK in 22ms (Views: 12.0ms | ActiveRecord: 7.8ms | Allocations: 13570)
+
+
+Started GET "/home/index" for ::1 at 2024-09-06 18:23:51 -0300
+Processing by HomeController#index as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering home/index.html.erb within layouts/application
+  [1m[36mEstoque Load (0.6ms)[0m  [1m[34mSELECT "estoques".* FROM "estoques"[0m
+  ↳ app/views/home/index.html.erb:14
+  [1m[36mProduto Pluck (0.1ms)[0m  [1m[34mSELECT "produtos"."nome" FROM "produtos" WHERE "produtos"."id" = $1[0m  [["id", 1]]
+  ↳ app/views/home/index.html.erb:16
+  [1m[36mProduto Pluck (0.1ms)[0m  [1m[34mSELECT "produtos"."nome" FROM "produtos" WHERE "produtos"."id" = $1[0m  [["id", 3]]
+  ↳ app/views/home/index.html.erb:16
+  Rendered home/index.html.erb within layouts/application (Duration: 9.6ms | Allocations: 5529)
+  Rendered layout layouts/application.html.erb (Duration: 12.7ms | Allocations: 11819)
+Completed 200 OK in 14ms (Views: 6.8ms | ActiveRecord: 6.5ms | Allocations: 13636)
+
+

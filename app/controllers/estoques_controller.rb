@@ -1,5 +1,6 @@
 class EstoquesController < ApplicationController
   before_action :set_estoque, only: %i[ show edit update destroy ]
+  before_action :set_produto_options, only: [ :new, :create, :edit, :update ]
 
   # GET /estoques or /estoques.json
   def index
@@ -63,8 +64,12 @@ class EstoquesController < ApplicationController
       @estoque = Estoque.find(params[:id])
     end
 
+  def set_produto_options
+    @produto_options = Produto.all.pluck(:nome, :id)
+  end
+
     # Only allow a list of trusted parameters through.
     def estoque_params
-      params.require(:estoque).permit(:nome, :preco_kg, :quantidade, :desc, :lote)
+      params.require(:estoque).permit(:produto_id, :preco_kg, :quantidade, :desc, :lote)
     end
 end

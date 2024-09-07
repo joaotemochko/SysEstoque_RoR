@@ -1,0 +1,23 @@
+<h1>Início</h1>
+
+<h3>Estoque</h3>
+
+<div class="table-responsive">
+  <table class="text-center table table-striped table-bordered table-hover">
+    <thead>
+      <th>Produto</th>
+      <th>Quantidade</th>
+      <th></th>
+    </thead>
+
+    <tbody>
+      <% @estoques.each do |e| %>
+        <tr>
+          <td><%= @produtos.where(:id => e.produto_id).pluck(:nome)[0] %></td>
+          <td><%= e.quantidade %></td>
+          <td><%= link_to 'Mostrar', estoque_path(e.id), class: 'btn btn-outline-info' %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
