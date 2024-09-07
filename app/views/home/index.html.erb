@@ -1,6 +1,6 @@
 <h1>Início</h1>
 
-<h3>Estoque</h3>
+<h3>Produtos</h3>
 
 <div class="table-responsive">
   <table class="text-center table table-striped table-bordered table-hover">
@@ -11,11 +11,12 @@
     </thead>
 
     <tbody>
-      <% @estoques.each do |e| %>
+      <% @produtos.each do |p| %>
         <tr>
-          <td><%= @produtos.where(:id => e.produto_id).pluck(:nome)[0] %></td>
-          <td><%= e.quantidade %></td>
-          <td><%= link_to 'Mostrar', estoque_path(e.id), class: 'btn btn-outline-info' %></td>
+          <td><%= p.nome %></td>
+          <% quantidade_total = @estoques.where(:produto_id => p.id) %>
+          <td><%= quantidade_total.sum(:quantidade) %></td>
+          <td><%= link_to 'Mostrar', produto_path(p.id), class: 'btn btn-outline-info' %></td>
         </tr>
       <% end %>
     </tbody>
